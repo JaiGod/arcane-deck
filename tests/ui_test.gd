@@ -83,6 +83,18 @@ func run_ui(_smoke) -> int:
 		if run_i == 0 and not main.run.won:
 			fails += 1
 			print("FAIL: forced-win run should win")
+	# shop and elite are random on the map, so visit them directly too
+	await cmd("new:1")
+	main.open_node("shop")
+	await frames(2)
+	if main.screen == "shop":
+		seen["shop"] = true
+		main.scr._buy_card(0)
+	main.open_node("elite")
+	await frames(2)
+	if main.bv and main.bv.kind == "elite":
+		seen["kind_elite"] = true
+	await cmd("go:map")
 	for s in ["title", "heroes", "history", "help"]:
 		await cmd("go:" + s)
 		await frames(3)
