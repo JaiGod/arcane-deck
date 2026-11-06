@@ -84,7 +84,7 @@ footer{padding:36px 0 50px;text-align:center;color:var(--muted);border-top:1px s
 <footer>Made by Jaineil Rana (JaKing) &middot; part of <a href="https://github.com/JaiGod">JaiGod</a></footer>
 <script>
 (function(){
-var names=["title","map","battle","shop"],box=document.getElementById("shots");
+var names=["title","map","battle","heroes"],box=document.getElementById("shots");
 names.forEach(function(n){var i=new Image();i.alt="Arcane Deck "+n+" screen";i.loading="lazy";i.onerror=function(){i.remove()};i.src="screenshots/"+n+".jpg";box.appendChild(i)});
 var c=document.getElementById("sky"),x=c.getContext("2d"),s=[];
 for(var k=0;k<120;k++)s.push([Math.random(),Math.random(),Math.random()*0.8+0.2]);
