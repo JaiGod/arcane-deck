@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arcane Deck - deck-building card roguelike</title>
+<meta name="description" content="Arcane Deck: an original deck-building card roguelike made in Godot 4. Three heroes, 90 cards, relics, a branching map and three acts of bosses. Play free in your browser.">
+<style>
+:root{--bg:#0a0814;--panel:#151027;--line:#3a2a66;--ink:#f4ead8;--muted:#b9aed0;--gold:#ffcf6a;--violet:#b49cff;--ember:#ff7a3d;--moss:#7be36a;--star:#7aa8ff}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow-x:hidden}
+a{color:var(--gold)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 16px}
+header{position:relative;padding:64px 0 40px;text-align:center;overflow:hidden}
+#sky{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+header .wrap{position:relative;z-index:1}
+h1{font-size:clamp(44px,10vw,92px);letter-spacing:.06em;margin:0;line-height:1;color:#ffe9b8;text-shadow:0 0 30px #7a5cff,0 4px 0 #2a1050}
+.tag{color:var(--violet);font-size:clamp(16px,3.6vw,21px);margin:14px 0 28px}
+.play{display:inline-block;background:linear-gradient(180deg,#ffcf6a,#ff9a3a);color:#1a1024;text-decoration:none;font-weight:800;font-size:22px;padding:16px 38px;border-radius:14px;box-shadow:0 0 0 3px #2a1a4a,0 0 40px #ff9a3a88;transition:transform .15s}
+.play:hover{transform:translateY(-2px) scale(1.03)}
+.sub{margin-top:14px;color:var(--muted);font-size:14px}
+section{padding:34px 0}
+h2{font-size:28px;margin:0 0 16px;color:#ffe9b8}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.card{background:var(--panel);border:2px solid var(--line);border-radius:16px;padding:18px}
+.card h3{margin:0 0 6px;font-size:20px}
+.card p{margin:0;color:var(--muted)}
+.hero h3 span{font-weight:400;color:var(--muted);font-size:15px}
+.shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.shots img{width:100%;border-radius:12px;border:2px solid var(--line);display:block}
+kbd{background:#241a3e;border:1px solid var(--line);border-radius:6px;padding:1px 7px;font-size:14px}
+ul{padding-left:20px;margin:0}
+li{margin:4px 0;color:var(--muted)}
+li b{color:var(--ink)}
+footer{padding:36px 0 50px;text-align:center;color:var(--muted);border-top:1px solid var(--line);margin-top:20px}
+</style>
+</head>
+<body>
+<header>
+<canvas id="sky"></canvas>
+<div class="wrap">
+<h1>ARCANE DECK</h1>
+<p class="tag">A deck-building roguelike of spells, relics and three cursed acts.</p>
+<a class="play" href="./play/">&#9654; Play in browser</a>
+<p class="sub">Free - desktop and mobile - no install - progress saves in your browser</p>
+</div>
+</header>
+<main class="wrap">
+<section>
+<h2>Choose a hero</h2>
+<div class="grid">
+<div class="card hero" style="border-color:#ff7a3d"><h3 style="color:#ff7a3d">Brakka <span>the Ironwarden</span></h3><p>A forge-born knight. Stacks Block, grows Strength and turns armor into hammer blows.</p></div>
+<div class="card hero" style="border-color:#7be36a"><h3 style="color:#7be36a">Nyx <span>the Thornwitch</span></h3><p>A swamp witch who wins slowly and surely. Poison, Agility and endless thorns.</p></div>
+<div class="card hero" style="border-color:#7aa8ff"><h3 style="color:#7aa8ff">Orrin <span>the Starweaver</span></h3><p>An astral sage. Draws deep, conjures Star Motes and casts spells twice.</p></div>
+</div>
+</section>
+<section>
+<h2>Screenshots</h2>
+<div class="shots" id="shots"></div>
+</section>
+<section>
+<h2>Features</h2>
+<div class="grid">
+<div class="card"><h3>90 original cards</h3><p>30 per hero: attacks, skills and powers, each with an upgraded version. Win runs to unlock more.</p></div>
+<div class="card"><h3>Read the enemy</h3><p>Every enemy shows its intent: attack, defend, empower or curse. Plan Block, Energy and statuses around it.</p></div>
+<div class="card"><h3>Branching maps</h3><p>Fights, elites, campfires, merchants, mystery events and treasure on a new map every act.</p></div>
+<div class="card"><h3>23 relics, 3 bosses</h3><p>The Rootmother, the Glass Tyrant and the Unwoven guard the top of each act.</p></div>
+</div>
+</section>
+<section>
+<h2>How to play</h2>
+<ul>
+<li><b>Drag</b> a card onto an enemy to play it, or <b>tap</b> a card and then tap a target.</li>
+<li>Each turn you get <b>3 Energy</b> and draw 5 cards. Block lasts until your next turn.</li>
+<li>Keyboard: <kbd>1</kbd>-<kbd>9</kbd> select, <kbd>Tab</kbd> target, <kbd>Enter</kbd> play, <kbd>E</kbd> end turn, <kbd>Esc</kbd> pause.</li>
+<li>Your run saves every time you reach the map. Your run history and best score are kept too.</li>
+</ul>
+</section>
+<section>
+<h2>Built with</h2>
+<p style="color:var(--muted)">Godot 4.3 (GDScript, Compatibility renderer), exported to WebAssembly. Every picture is drawn in code and every sound is synthesized at startup - no image or audio files. <a href="https://github.com/JaiGod/arcane-deck">Source on GitHub</a>.</p>
+</section>
+</main>
+<footer>Made by Jaineil Rana (JaKing) &middot; part of <a href="https://github.com/JaiGod">JaiGod</a></footer>
+<script>
+(function(){
+var names=["title","map","battle","shop"],box=document.getElementById("shots");
+names.forEach(function(n){var i=new Image();i.alt="Arcane Deck "+n+" screen";i.loading="lazy";i.onerror=function(){i.remove()};i.src="screenshots/"+n+".jpg";box.appendChild(i)});
+var c=document.getElementById("sky"),x=c.getContext("2d"),s=[];
+for(var k=0;k<120;k++)s.push([Math.random(),Math.random(),Math.random()*0.8+0.2]);
+function draw(t){var w=c.width=c.offsetWidth,h=c.height=c.offsetHeight;var g=x.createLinearGradient(0,0,0,h);g.addColorStop(0,"#0a0814");g.addColorStop(1,"#1c1238");x.fillStyle=g;x.fillRect(0,0,w,h);
+for(var i=0;i<s.length;i++){var a=s[i];x.globalAlpha=0.25+0.5*a[2]*(0.5+0.5*Math.sin(t/600*a[2]+i));x.fillStyle="#fff";x.fillRect((a[0]*w+t*0.01*a[2])%w,a[1]*h,1+a[2]*1.5,1+a[2]*1.5)}x.globalAlpha=1;requestAnimationFrame(draw)}
+requestAnimationFrame(draw);
+})();
+</script>
+</body>
+</html>
