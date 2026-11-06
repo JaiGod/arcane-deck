@@ -1,0 +1,58 @@
+name: Build and deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:4.3
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install export templates
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates/
+          mv /root/.local/share/godot/export_templates/4.3.stable ~/.local/share/godot/export_templates/ || true
+
+      - name: Import project
+        run: godot --headless --import || true
+
+      - name: Smoke test (rules, bot runs, every screen)
+        run: timeout 600 godot --headless res://tests/SmokeTest.tscn
+
+      - name: Export Web (threads off, Compatibility renderer)
+        run: |
+          mkdir -p build/play
+          godot --headless --export-release "Web" build/play/index.html
+          test -f build/play/index.wasm
+          cp web/index.html build/index.html
+          mkdir -p build/screenshots
+          cp docs/screenshots/*.jpg build/screenshots/ 2>/dev/null || true
+          touch build/.nojekyll
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: build
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
